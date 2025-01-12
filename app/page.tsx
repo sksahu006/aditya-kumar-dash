@@ -4,15 +4,15 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Brush, Code2, Contact2, Home, User } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import ProfileCard from "@/components/ProfileCard";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function HomePage() {
-  const mainRef = useRef(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -49,82 +49,19 @@ export default function HomePage() {
       });
     }, mainRef);
 
-    // Add smooth scrolling behavior
-    const handleNavClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const link = target.closest('a');
-      
-      if (link?.getAttribute('href')?.startsWith('#')) {
-        e.preventDefault();
-        const sectionId = link.getAttribute('href');
-        const section = document.querySelector(sectionId as string);
-        
-        if (section) {
-          gsap.to(window, {
-            duration: 1,
-            scrollTo: section,
-            ease: "power3.inOut",
-            offsetY: 80
-          });
-        }
-      }
-    };
-
-    // Add click event listeners to all navigation links
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    navLinks.forEach(link => {
-      link.addEventListener('click', handleNavClick);
-    });
-
-    return () => {
-      ctx.revert();
-      // Clean up event listeners
-      navLinks.forEach(link => {
-        link.removeEventListener('click', handleNavClick);
-      });
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <main ref={mainRef} className="bg-[#020817] min-h-screen text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-[#020817]/80 backdrop-blur-sm z-50 py-4">
-        <div className="container mx-auto flex justify-center gap-8">
-          {[
-            { href: "#home", icon: Home, label: "Home" },
-            { href: "#about", icon: User, label: "About" },
-            { href: "#skills", icon: Code2, label: "Skills" },
-            { href: "#projects", icon: Brush, label: "Projects" },
-            { href: "#contact", icon: Contact2, label: "Contact" },
-          ].map(({ href, icon: Icon, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="flex items-center gap-2 hover:text-blue-400 transition-colors cursor-pointer"
-            >
-              <Icon size={20} />
-              <span>{label}</span>
-            </a>
-          ))}
-        </div>
-      </nav>
-
-      {/* Rest of the component remains unchanged */}
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-20">
+      <section
+        id="home"
+        className="min-h-screen flex items-center justify-center pt-20"
+      >
         <div className="container mx-auto px-4 hero-content text-center">
-          <div className="relative w-48 h-48 mx-auto mb-8 rounded-full overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400&fit=crop"
-              alt="Profile"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <h1 className="text-5xl font-bold mb-4">Hey, I am Aditya</h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            A passionate graphic designer focused on crafting minimalist, impactful, and meaningful visual designs.
-          </p>
+          <ProfileCard />
+          
         </div>
       </section>
 
@@ -134,20 +71,27 @@ export default function HomePage() {
           <div className="space-y-6">
             <h2 className="text-4xl font-bold">Design Life</h2>
             <p className="text-gray-400">
-              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s.
+              Lorem ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem ipsum has been the industry's standard dummy text
+              ever since the 1500s.
             </p>
           </div>
           <div className="space-y-6">
             <h2 className="text-4xl font-bold">Study Life</h2>
             <p className="text-gray-400">
-              Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s.
+              Lorem ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem ipsum has been the industry's standard dummy text
+              ever since the 1500s.
             </p>
           </div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="min-h-screen flex items-center py-20 bg-[#0a1122]">
+      <section
+        id="skills"
+        className="min-h-screen flex items-center py-20 bg-[#0a1122]"
+      >
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12">SKILLS</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 justify-items-center">
@@ -184,7 +128,7 @@ export default function HomePage() {
               >
                 <div className="relative h-[400px] bg-[#1a2333] rounded-xl overflow-hidden">
                   <Image
-                    src={`https://source.unsplash.com/random/800x1200?movie,poster&sig=${index}`}
+                    src={`https://picsum.photos/seed/${index}/1240/874`}
                     alt={project}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -208,7 +152,10 @@ export default function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="min-h-screen flex items-center py-20 bg-[#0a1122]">
+      <section
+        id="contact"
+        className="min-h-screen flex items-center py-20 bg-[#0a1122]"
+      >
         <div className="container mx-auto px-4 max-w-2xl">
           <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
           <form className="space-y-6">
@@ -233,7 +180,10 @@ export default function HomePage() {
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-2">
+              <label
+                htmlFor="message"
+                className="block text-sm font-medium mb-2"
+              >
                 Message
               </label>
               <textarea
