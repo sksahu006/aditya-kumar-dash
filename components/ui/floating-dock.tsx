@@ -96,7 +96,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto flex h-16 gap-4 items-end  rounded-2xl bg-black/70  dark:bg-neutral-900 px-4 pb-3",
+        "mx-auto w-[425px] sm:w-[500px] flex h-20 gap-4 items-end justify-around  rounded-2xl bg-black/70  dark:bg-neutral-900 px-4 pb-3",
         className
       )}
     >
@@ -126,14 +126,14 @@ function IconContainer({
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-  let heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+  let widthTransform = useTransform(distance, [-150, 0, 150], [50, 120, 50]);
+  let heightTransform = useTransform(distance, [-150, 0, 150], [50, 120, 50]);
 
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
+  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
   let heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
-    [20, 40, 20]
+    [40, 80, 40]
   );
 
   let width = useSpring(widthTransform, {
@@ -175,7 +175,7 @@ function IconContainer({
               initial={{ opacity: 0, y: 10, x: "-50%" }}
               animate={{ opacity: 1, y: 0, x: "-50%" }}
               exit={{ opacity: 0, y: 2, x: "-50%" }}
-              className="px-2 py-0.5 whitespace-pre rounded-md bg-black/50 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-white absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+              className="px-2 py-0.5 whitespace-pre rounded-md bg-black/50 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-white absolute left-1/2 -translate-x-1/2 -top-8 w-full text-xs"
             >
               {title}
             </motion.div>
@@ -183,7 +183,7 @@ function IconContainer({
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center"
+          className="flex items-center justify-center w-full h-full"
         >
           {icon}
         </motion.div>

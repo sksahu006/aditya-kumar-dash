@@ -8,7 +8,6 @@ import Image from "next/image";
 import Link from "next/link";
 import ProfileCard from "@/components/ProfileCard";
 import About from "@/components/About";
-import Skill from "@/components/Skill";
 import { LampContainer } from "@/components/ui/lamp";
 import { motion } from "framer-motion";
 import { FloatingDock } from "@/components/ui/floating-dock";
@@ -80,7 +79,7 @@ export default function HomePage() {
       {/* Skills Section */}
       <section
         id="skills"
-        className="min-h-screen flex items-center w-full overflow-hidden" 
+        className="min-h-screen flex items-center w-full overflow-hidden"
       >
         <LampContainer className="w-full">
           {" "}
@@ -101,74 +100,73 @@ export default function HomePage() {
               </h2>
               <div className="">
                 <FloatingDock
-                //  mobileClassName="translate-y-20"
-                  items={[
-                    {
-                      title: "Photoshop",
-                      icon: (
-                        <Image
-                          src="skill5.png"
-                          width={20}
-                          height={20}
-                          className=""
-                          alt="Photoshop Logo"
-                        />
-                      ),
-                      href: "#",
-                    },
-                    {
-                      title: "Illustrator",
-                      icon: (
-                        <Image
-                          src="skill2.png"
-                          width={20}
-                          height={20}
-                          alt="Illustrator Logo"
-                          className=""
-                        />
-                      ),
-                      href: "#",
-                    },
-                    {
-                      title: "Lightroom",
-                      icon: (
-                        <Image
-                          src="skill3.png"
-                          width={20}
-                          height={20}
-                          alt="Lightroom Logo"
-                          className=""
-                        />
-                      ),
-                      href: "#",
-                    },
-                    {
-                      title: "Ds",
-                      icon: (
-                        <Image
-                          src="skill3.png"
-                          width={20}
-                          height={20}
-                          alt="Ds Logo"
-                          className=""
-                        />
-                      ),
-                      href: "#",
-                    },
-                    {
-                      title: "Midjourney",
-                      icon: (
-                        <Image
-                          src="skill4.png"
-                          width={20}
-                          height={20}
-                          alt="Midjourney Logo"
-                          className=""
-                        />
-                      ),
-                      href: "#",
-                    },
-                  ]}
+                items={[
+                  {
+                    title: "Photoshop",
+                    icon: (
+                      <Image
+                        src="skill5.png"
+                        width={40}
+                        height={40}
+                        className=""
+                        alt="Photoshop Logo"
+                      />
+                    ),
+                    href: "#",
+                  },
+                  {
+                    title: "Dimension",
+                    icon: (
+                      <Image
+                        src="skill2.png"
+                        width={40}
+                        height={40}
+                        alt="Dimension Logo"
+                        className=""
+                      />
+                    ),
+                    href: "#",
+                  },
+                  {
+                    title: "Illustrator",
+                    icon: (
+                      <Image
+                        src="skill4.png"
+                        width={40}
+                        height={40}
+                        alt="Illustrator Logo"
+                        className=""
+                      />
+                    ),
+                    href: "#",
+                  },
+                  {
+                    title: "LightRoom",
+                    icon: (
+                      <Image
+                        src="skill3.png"
+                        width={40}
+                        height={40}
+                        alt="LightRoom Logo"
+                        className=""
+                      />
+                    ),
+                    href: "#",
+                  },
+                  {
+                    title: "Midjourney",
+                    icon: (
+                      <Image
+                        src="skill1.png"
+                        width={40}
+                        height={40}
+                        alt="Midjourney Logo"
+                        className=""
+                      />
+                    ),
+                    href: "#",
+                  },
+                ]}
                 />
                 {/* {[
                   "skill5.png",

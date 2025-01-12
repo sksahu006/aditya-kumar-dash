@@ -65,6 +65,11 @@ export default function ProfileCard() {
           </div>
         </CardBody>
       </CardContainer>
+
+      <p className="text-2xl font-semibold text-white/70 tracking-wider leading-8 max-w-2xl mx-auto mt-4">
+        A passionate graphic designer focused on crafting minimalist, impactful,
+        and meaningful visual designs.
+      </p>
     </>
   );
 }
