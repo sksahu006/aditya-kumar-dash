@@ -7,6 +7,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 import ProfileCard from "@/components/ProfileCard";
+import About from "@/components/About";
+import Skill from "@/components/Skill";
+import { LampContainer } from "@/components/ui/lamp";
+import { motion } from "framer-motion";
+import { FloatingDock } from "@/components/ui/floating-dock";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -61,50 +66,133 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-4 hero-content text-center">
           <ProfileCard />
-          
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="min-h-screen flex items-center py-20">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold">Design Life</h2>
-            <p className="text-gray-400">
-              Lorem ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </p>
-          </div>
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold">Study Life</h2>
-            <p className="text-gray-400">
-              Lorem ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem ipsum has been the industry's standard dummy text
-              ever since the 1500s.
-            </p>
-          </div>
-        </div>
+      <section
+        id="about"
+        className="min-h-screen flex items-center md:py-20 px-6 md:px-10 lg:px-24"
+      >
+        <About />
       </section>
 
       {/* Skills Section */}
       <section
         id="skills"
-        className="min-h-screen flex items-center py-20 bg-[#0a1122]"
+        className="min-h-screen flex items-center w-full overflow-hidden" 
       >
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">SKILLS</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 justify-items-center">
-            {["Ps", "Ai", "Lr", "Ds", "Pr"].map((skill, index) => (
-              <div
-                key={skill}
-                className="skill-icon w-24 h-24 rounded-xl bg-[#1a2333] flex items-center justify-center text-2xl font-bold"
-              >
-                {skill}
+        <LampContainer className="w-full">
+          {" "}
+          {/* Added w-full to ensure full width */}
+          <motion.div
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="w-full mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+          >
+            <div className="container mx-auto px-4 w-full">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12  bg-gradient-to-r from-[#cedeee] to-[#779fca] text-transparent bg-clip-text">
+                SKILLS
+              </h2>
+              <div className="">
+                <FloatingDock
+                //  mobileClassName="translate-y-20"
+                  items={[
+                    {
+                      title: "Photoshop",
+                      icon: (
+                        <Image
+                          src="skill5.png"
+                          width={20}
+                          height={20}
+                          className=""
+                          alt="Photoshop Logo"
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Illustrator",
+                      icon: (
+                        <Image
+                          src="skill2.png"
+                          width={20}
+                          height={20}
+                          alt="Illustrator Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Lightroom",
+                      icon: (
+                        <Image
+                          src="skill3.png"
+                          width={20}
+                          height={20}
+                          alt="Lightroom Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Ds",
+                      icon: (
+                        <Image
+                          src="skill3.png"
+                          width={20}
+                          height={20}
+                          alt="Ds Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Midjourney",
+                      icon: (
+                        <Image
+                          src="skill4.png"
+                          width={20}
+                          height={20}
+                          alt="Midjourney Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                  ]}
+                />
+                {/* {[
+                  "skill5.png",
+                  "skill2.png",
+                  "skill3.png",
+                  "skill4.png",
+                  "skill1.png",
+                ].map((skill, index) => (
+                  <div
+                    key={index}
+                    className="skill-icon w-16 h-16 md:w-24 md:h-24 rounded-xl text-white flex items-center justify-center text-xl md:text-2xl font-bold"
+                  >
+                    <Image
+                      src={`${skill}`}
+                      alt="skill"
+                      width={64}
+                      height={64}
+                    />
+                  </div>
+                ))} */}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          </motion.div>
+        </LampContainer>
       </section>
 
       {/* Projects Section */}
