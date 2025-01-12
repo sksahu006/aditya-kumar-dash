@@ -17,7 +17,6 @@ const Navbar = () => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'skills', 'projects', 'contact'];
       
-      // Find the current section in view
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -30,34 +29,8 @@ const Navbar = () => {
       }
     };
 
-    // Smooth scroll implementation
-    const handleNavClick = (e: Event) => {
-      e.preventDefault();
-      const target = e.currentTarget as HTMLAnchorElement;
-      const sectionId = target.getAttribute('href')?.substring(1);
-      
-      if (sectionId) {
-        const section = document.getElementById(sectionId);
-        section?.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-
-    // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
-
-    // Add click listeners to nav links
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    navLinks.forEach(link => {
-      link.addEventListener('click', handleNavClick);
-    });
-
-    // Cleanup function
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      navLinks.forEach(link => {
-        link.removeEventListener('click', handleNavClick);
-      });
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -67,6 +40,17 @@ const Navbar = () => {
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
       });
+    }
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute('href');
+    const sectionId = href?.substring(1);
+    
+    if (sectionId) {
+      const section = document.getElementById(sectionId);
+      section?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -94,6 +78,7 @@ const Navbar = () => {
               <a
                 key={href}
                 href={href}
+                onClick={handleNavClick}
                 className={`
                   relative text-base md:text-lg transition-all duration-300
                   ${isActive
