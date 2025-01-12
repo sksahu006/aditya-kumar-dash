@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { useEffect } from "react";
 import { gsap } from "gsap";
@@ -6,7 +6,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 
-export default function ProjectDetailPage({ params }: { params: { id: string } }) {
+interface ProjectContentProps {
+  id: string;
+}
+
+export default function ProjectContent({ id }: ProjectContentProps) {
   useEffect(() => {
     gsap.from(".content", {
       y: 50,
@@ -24,7 +28,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
     "AVATAR",
     "MATRIX",
   ];
-  const projectTitle = projectTitles[Number(params.id) % projectTitles.length];
+  const projectTitle = projectTitles[Number(id) % projectTitles.length];
 
   return (
     <main className="bg-[#020817] min-h-screen text-white py-20">
@@ -40,7 +44,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
         <div className="grid md:grid-cols-2 gap-12">
           <div className="relative h-[600px] bg-[#1a2333] rounded-xl overflow-hidden">
             <Image
-              src={`https://source.unsplash.com/random/1200x1600?movie,poster&sig=${params.id}`}
+              src={`https://source.unsplash.com/random/1200x1600?movie,poster&sig=${id}`}
               alt={projectTitle}
               fill
               className="object-cover"
@@ -88,6 +92,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
                 <ExternalLink size={20} />
                 Live Preview
               </a>
+
               <a
                 href="#"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#1a2333] rounded-lg hover:bg-[#2a3343] transition-colors"
