@@ -2,6 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react';
 
+interface NavLink {
+  href: string;
+  label: string;
+}
+
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -11,6 +16,8 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      
+      // Find the current section in view
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
@@ -23,8 +30,34 @@ const Navbar = () => {
       }
     };
 
+    // Smooth scroll implementation
+    const handleNavClick = (e: Event) => {
+      e.preventDefault();
+      const target = e.currentTarget as HTMLAnchorElement;
+      const sectionId = target.getAttribute('href')?.substring(1);
+      
+      if (sectionId) {
+        const section = document.getElementById(sectionId);
+        section?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Add click listeners to nav links
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+      link.addEventListener('click', handleNavClick);
+    });
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      navLinks.forEach(link => {
+        link.removeEventListener('click', handleNavClick);
+      });
+    };
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -37,9 +70,17 @@ const Navbar = () => {
     }
   };
 
+  const navLinks: NavLink[] = [
+    { href: "#home", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#skills", label: "Skills" },
+    { href: "#projects", label: "Projects" },
+    { href: "#contact", label: "Contact" },
+  ];
+
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-      <div 
+      <div
         ref={navRef}
         className="relative bg-black/20 backdrop-blur-md px-4 md:px-8 py-3 rounded-full overflow-hidden"
         onMouseMove={handleMouseMove}
@@ -47,13 +88,7 @@ const Navbar = () => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="flex items-center gap-4 md:gap-8 relative z-10">
-          {[
-            { href: "#home", label: "Home" },
-            { href: "#about", label: "About" },
-            { href: "#skills", label: "Skills" },
-            { href: "#projects", label: "Projects" },
-            { href: "#contact", label: "Contact" },
-          ].map(({ href, label }) => {
+          {navLinks.map(({ href, label }) => {
             const isActive = activeSection === href.substring(1);
             return (
               <a
@@ -61,8 +96,8 @@ const Navbar = () => {
                 href={href}
                 className={`
                   relative text-base md:text-lg transition-all duration-300
-                  ${isActive 
-                    ? 'text-white bg-gradient-to-r from-black/80 via-black to-white/30 border border-white/50 px-3 md:px-6 py-2 rounded-full' 
+                  ${isActive
+                    ? 'text-white bg-gradient-to-r from-black/80 via-black to-white/30 border border-white/50 px-3 md:px-6 py-2 rounded-full'
                     : 'text-white/70 hover:text-white'
                   }
                 `}
@@ -73,7 +108,7 @@ const Navbar = () => {
           })}
         </div>
         {isHovered && (
-          <div 
+          <div
             className="absolute pointer-events-none transition-opacity duration-300"
             style={{
               left: `${mousePosition.x}px`,
@@ -92,4 +127,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
