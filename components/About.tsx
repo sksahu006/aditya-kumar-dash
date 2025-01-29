@@ -8,7 +8,7 @@ const LifeSection = () => {
     <div className="container mx-auto px-8 py-16 bg-[#020817]">
       <div className="grid md:grid-cols-2 gap-8">
         <div className="relative">
-          <div className="absolute top-2 left-12 w-40 h-40 z-10">
+          <div className="absolute top-24 md:top-2 left-4 md:left-12 w-28 md:w-40 h-28 md:h-40 z-10">
             <Image
               src="boy1.png"
               alt="Design Life"
@@ -18,10 +18,9 @@ const LifeSection = () => {
             />
           </div>
           <CardSpotlight className="mt-16 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
-            {/* <div className="mt-16 bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50"> */}
             <h2 className="mb-8 text-center whitespace-nowrap">
               <span className="text-4xl font-bold text-white my-1">
-                Desging
+                Designing
               </span>
               <span className="text-4xl font-bold block text-slate-400">
                 Life
@@ -44,7 +43,7 @@ const LifeSection = () => {
         </div>
 
         <div className="relative">
-          <div className="absolute top-0 left-12 w-40 h-40 z-10">
+          <div className="absolute top-24 md:top-2 left-6 md:left-12 w-28 md:w-40 h-28 md:h-40 z-10">
             <Image
               src="boy2.png"
               alt="Study Life"
@@ -55,7 +54,6 @@ const LifeSection = () => {
           </div>
 
           <CardSpotlight className="mt-16 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
-            {/* <div className="mt-16 bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50"> */}
               <h2 className="mb-8 text-center">
                 <span className="text-4xl font-bold text-white my-1">
                   Study

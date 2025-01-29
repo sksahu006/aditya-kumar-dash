@@ -11,6 +11,7 @@ import About from "@/components/About";
 import { LampContainer } from "@/components/ui/lamp";
 import { motion } from "framer-motion";
 import { FloatingDock } from "@/components/ui/floating-dock";
+import { HeroParallaxDemo } from "@/components/Project";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -100,141 +101,82 @@ export default function HomePage() {
               </h2>
               <div className="">
                 <FloatingDock
-                items={[
-                  {
-                    title: "Photoshop",
-                    icon: (
-                      <Image
-                        src="skill5.png"
-                        width={40}
-                        height={40}
-                        className=""
-                        alt="Photoshop Logo"
-                      />
-                    ),
-                    href: "#",
-                  },
-                  {
-                    title: "Dimension",
-                    icon: (
-                      <Image
-                        src="skill2.png"
-                        width={40}
-                        height={40}
-                        alt="Dimension Logo"
-                        className=""
-                      />
-                    ),
-                    href: "#",
-                  },
-                  {
-                    title: "Illustrator",
-                    icon: (
-                      <Image
-                        src="skill4.png"
-                        width={40}
-                        height={40}
-                        alt="Illustrator Logo"
-                        className=""
-                      />
-                    ),
-                    href: "#",
-                  },
-                  {
-                    title: "LightRoom",
-                    icon: (
-                      <Image
-                        src="skill3.png"
-                        width={40}
-                        height={40}
-                        alt="LightRoom Logo"
-                        className=""
-                      />
-                    ),
-                    href: "#",
-                  },
-                  {
-                    title: "Midjourney",
-                    icon: (
-                      <Image
-                        src="skill1.png"
-                        width={40}
-                        height={40}
-                        alt="Midjourney Logo"
-                        className=""
-                      />
-                    ),
-                    href: "#",
-                  },
-                ]}
+                  items={[
+                    {
+                      title: "Photoshop",
+                      icon: (
+                        <Image
+                          src="skill5.png"
+                          width={40}
+                          height={40}
+                          className=""
+                          alt="Photoshop Logo"
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Dimension",
+                      icon: (
+                        <Image
+                          src="skill2.png"
+                          width={40}
+                          height={40}
+                          alt="Dimension Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Illustrator",
+                      icon: (
+                        <Image
+                          src="skill4.png"
+                          width={40}
+                          height={40}
+                          alt="Illustrator Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "LightRoom",
+                      icon: (
+                        <Image
+                          src="skill3.png"
+                          width={40}
+                          height={40}
+                          alt="LightRoom Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                    {
+                      title: "Midjourney",
+                      icon: (
+                        <Image
+                          src="skill1.png"
+                          width={40}
+                          height={40}
+                          alt="Midjourney Logo"
+                          className=""
+                        />
+                      ),
+                      href: "#",
+                    },
+                  ]}
                 />
-                {/* {[
-                  "skill5.png",
-                  "skill2.png",
-                  "skill3.png",
-                  "skill4.png",
-                  "skill1.png",
-                ].map((skill, index) => (
-                  <div
-                    key={index}
-                    className="skill-icon w-16 h-16 md:w-24 md:h-24 rounded-xl text-white flex items-center justify-center text-xl md:text-2xl font-bold"
-                  >
-                    <Image
-                      src={`${skill}`}
-                      alt="skill"
-                      width={64}
-                      height={64}
-                    />
-                  </div>
-                ))} */}
               </div>
             </div>
           </motion.div>
         </LampContainer>
       </section>
 
-      {/* Projects Section */}
       <section id="projects" className="min-h-screen py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-2">Explore the journey</h2>
-          <p className="text-xl text-blue-400 mb-12">of my designs</p>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              "E HUMANS HUMANC",
-              "HALF LIFE",
-              "WHO?",
-              "INCEPTION",
-              "AVATAR",
-              "MATRIX",
-            ].map((project, index) => (
-              <Link
-                href={`/projects/${index}`}
-                key={project}
-                className="project-card group"
-              >
-                <div className="relative h-[400px] bg-[#1a2333] rounded-xl overflow-hidden">
-                  <Image
-                    src={`https://picsum.photos/seed/${index}/1240/874`}
-                    alt={project}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
-                    <h3 className="text-xl font-bold">{project}</h3>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <Link
-              href="/projects"
-              className="inline-block px-8 py-3 bg-blue-600 rounded-full hover:bg-blue-700 transition-colors"
-            >
-              View More Projects
-            </Link>
-          </div>
-        </div>
+        <HeroParallaxDemo />
       </section>
 
       {/* Contact Section */}
