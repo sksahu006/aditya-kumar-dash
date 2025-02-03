@@ -12,6 +12,7 @@ import { LampContainer } from "@/components/ui/lamp";
 import { motion } from "framer-motion";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import { HeroParallaxDemo } from "@/components/Project";
+import Navbar from "@/components/Navbar";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -59,6 +60,7 @@ export default function HomePage() {
 
   return (
     <main ref={mainRef} className="bg-[#020817] min-h-screen text-white">
+        <Navbar />
       {/* Hero Section */}
       <section
         id="home"
