@@ -50,8 +50,8 @@ export default function ProjectActions({ project }: {
     e.preventDefault();
     startTransition(async () => {
       try {
-        let imageUrl = formData.imageUrl;
-        
+        let imageUrl = formData.url;
+        console.log(imageUrl)
         if (formData.imageFile) {
           const cloudinaryUrl = await uploadImageToCloudinary(formData.imageFile);
           imageUrl = cloudinaryUrl;
