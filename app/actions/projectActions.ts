@@ -1,12 +1,15 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { Project } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 
 export async function createProject(data: Project) {
   try {
     const newProject = await prisma.portFolioProject.create({
       data,
     });
+     // Revalidate dashboard
+     revalidatePath("/dashboard");
 
     return {
       status: 200,
@@ -31,6 +34,7 @@ export async function updateProject(id: number, data: Project) {
       },
       data,
     });
+    revalidatePath("/dashboard");
 
     return {
       status: 200,
@@ -54,6 +58,7 @@ export async function deleteProject(id: number) {
         id,
       },
     });
+    revalidatePath("/dashboard");
 
     return {
       status: 200,
@@ -73,6 +78,7 @@ export async function deleteProject(id: number) {
 export async function getProjects() {
   try {
     const projects = await prisma.portFolioProject.findMany();
+    revalidatePath("/dashboard");
     return {
       status: 200,
       data: projects,
@@ -95,6 +101,7 @@ export async function getProjectsByCategory(category: string) {
         category,
       },
     });
+    revalidatePath("/dashboard");
     return {
       status: 200,
       data: projects,
