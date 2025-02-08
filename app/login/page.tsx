@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex items-center justify-center min-h-screen">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
+      {/* <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center">Sign In</h2>
         <form onSubmit={handleSubmit} className="mt-4">
           <div className="mb-4">
@@ -68,7 +68,7 @@ export default function LoginPage() {
             Sign In
           </button>
         </form>
-      </div>
+      </div> */}
     </main>
   );
 }

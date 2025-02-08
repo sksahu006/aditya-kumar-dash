@@ -17,7 +17,7 @@ export default function ProjectForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const categories = ["AI","Movie Poster","Promotioanl Post","Logo","social Media","Minimilistic design","Illustration","Packaging Design,Ak's Designs,Other"]; // Your categories
+  const categories = ["AI","Movie Poster","Promotioanl Post","Logo","social Media","Minimilistic design","Illustration","Packaging Design","Ak's Designs","Others"]; // Your categories
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
