@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createProject } from "@/app/actions/projectActions";
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProjectForm() {
   const [formData, setFormData] = useState({
@@ -15,7 +15,9 @@ export default function ProjectForm() {
     imageFile: null as File | null,
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
+
+  const categories = ["AI","Movie Poster","Promotioanl Post","Logo","social Media","Minimilistic design","Illustration","Packaging Design,Ak's Designs,Other"]; // Your categories
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -68,14 +70,19 @@ export default function ProjectForm() {
       </div>
       <div>
         <Label htmlFor="category">Category</Label>
-        <Input
+        <select
           id="category"
-          type="text"
-          className="text-black"
-          placeholder="Enter project category"
+          className="text-black w-full p-2 border rounded-md"
           value={formData.category}
           onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-        />
+        >
+          <option value="">Select Category</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
         <Label htmlFor="image">Upload Image</Label>

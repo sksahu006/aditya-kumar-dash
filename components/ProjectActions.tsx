@@ -8,14 +8,15 @@ import { Upload, Loader2, X, Pencil, Trash2, Link2, ImageIcon, LayoutTemplate } 
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 
-export default function ProjectActions({ project }: { 
-  project: { 
-    id: number; 
-    title: string; 
-    category: string; 
-    url: string; 
-    imageUrl?: string; 
-}}) {
+export default function ProjectActions({ project }: {
+  project: {
+    id: number;
+    title: string;
+    category: string;
+    url: string;
+    imageUrl?: string;
+  }
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
@@ -57,7 +58,7 @@ export default function ProjectActions({ project }: {
           imageUrl = cloudinaryUrl;
         }
 
-        await updateProject(project.id, { 
+        await updateProject(project.id, {
           title: formData.title,
           category: formData.category,
           url: imageUrl,
@@ -71,14 +72,14 @@ export default function ProjectActions({ project }: {
       }
     });
   };
-
+  const categories = ["AI", "Movie Poster", "Promotioanl Post", "Logo", "social Media", "Minimilistic design", "Illustration", "Packaging Design,Ak's Designs,Other"]; // Your categories
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
           {isEditing ? "Edit Project" : project.title}
         </h1>
-        <Button 
+        <Button
           onClick={() => setIsEditing(!isEditing)}
           variant="ghost"
           className="rounded-full p-3 hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -100,26 +101,37 @@ export default function ProjectActions({ project }: {
                 <LayoutTemplate className="w-5 h-5 text-purple-600" />
                 Project Details
               </h2>
-              
+
               <div className="space-y-4">
-                <InputField 
+                <InputField
                   icon={<Pencil className="w-4 h-4" />}
                   label="Title"
                   value={formData.title}
-                  onChange={(e : React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, title: e.target.value }))}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, title: e.target.value }))}
                 />
-                <InputField 
-                  icon={<LayoutTemplate className="w-4 h-4" />}
-                  label="Category"
-                  value={formData.category}
-                  onChange={(e : React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, category: e.target.value }))}
-                />
-                <InputField 
+                <div className="flex flex-col gap-1">
+                  <label className="text-sm font-medium">Category</label>
+                  <div className="relative">
+                    <LayoutTemplate className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+                    <select
+                      className="border rounded-md p-2 pl-10 text-black w-full"
+                      value={formData.category}
+                      onChange={(e) => setFormData((p) => ({ ...p, category: e.target.value }))}
+                    >
+                      <option value="" disabled>Select a category</option>
+                      {categories.map((category) => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <InputField
                   icon={<Link2 className="w-4 h-4" />}
                   label="Project URL"
                   type="url"
                   value={formData.url}
-                  onChange={(e : React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, url: e.target.value }))}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, url: e.target.value }))}
                 />
               </div>
             </div>
@@ -129,7 +141,7 @@ export default function ProjectActions({ project }: {
                 <ImageIcon className="w-5 h-5 text-purple-600" />
                 Media Upload
               </h2>
-              
+
               <label className="group relative aspect-video flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-purple-500 transition-colors">
                 {formData.imageUrl ? (
                   <>
@@ -167,7 +179,7 @@ export default function ProjectActions({ project }: {
               <ImageIcon className="w-5 h-5 text-purple-600" />
               Live Preview
             </h2>
-            
+
             <div className="border rounded-xl overflow-hidden">
               <div className="relative aspect-video bg-gray-100">
                 {formData.imageUrl && (
@@ -198,8 +210,8 @@ export default function ProjectActions({ project }: {
               >
                 Discard
               </Button>
-              <Button 
-                onClick={handleUpdate} 
+              <Button
+                onClick={handleUpdate}
                 disabled={isPending}
                 className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
               >
@@ -223,7 +235,7 @@ export default function ProjectActions({ project }: {
                 />
               )}
             </div>
-            
+
             <div className="space-y-4">
               <DetailItem label="Title" value={project.title} />
               <DetailItem label="Category" value={project.category} />
@@ -234,7 +246,7 @@ export default function ProjectActions({ project }: {
           <div className="bg-glass p-6 rounded-xl shadow-inset h-fit sticky top-6">
             <h2 className="text-lg font-semibold mb-6">Project Actions</h2>
             <div className="space-y-4">
-              <Button 
+              <Button
                 onClick={() => setIsEditing(true)}
                 variant="outline"
                 className="w-full justify-start gap-2 text-black hover:bg-purple-50"
@@ -242,7 +254,7 @@ export default function ProjectActions({ project }: {
                 <Pencil className="w-4 h-4" />
                 Edit Project
               </Button>
-              <Button 
+              <Button
                 onClick={handleDelete}
                 variant="outline"
                 className="w-full justify-start gap-2 text-red-600 hover:bg-red-50"
