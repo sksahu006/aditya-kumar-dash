@@ -37,11 +37,11 @@ export const authConfig: NextAuthOptions = {
     // Set the session to expire after 30 minutes (in seconds)
     maxAge: 1 * 60,
   },
-  callbacks: {
-    async redirect() {
-      return process.env.NEXTAUTH_URL + '/dashboard'; 
-    },
-  },
+  // callbacks: {
+  //   async redirect() {
+  //     return process.env.NEXTAUTH_URL + '/dashboard'; 
+  //   },
+  // },
  
 };
 
