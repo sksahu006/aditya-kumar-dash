@@ -1,6 +1,6 @@
 "use server";
 import { prisma } from "@/lib/prisma";
-import { Project } from "@/lib/types";
+import { Project, ProjectWithCategory } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 
 export async function createProject(data: Project) {
@@ -77,7 +77,38 @@ export async function deleteProject(id: number) {
 
 export async function getProjects() {
   try {
-    const projects = await prisma.portFolioProject.findMany();
+    const projects = await prisma.portFolioProject.findMany({
+      include: {
+        category: true,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return {
+      status: 200,
+      data: projects as ProjectWithCategory[],
+      message: "Projects fetched successfully",
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: 500,
+      data: null,
+      message: "Failed to fetch projects",
+    };
+  }
+}
+
+export async function getProjectsByCategory(category: number) {
+  try {
+    const projects = await prisma.portFolioProject.findMany({
+      where: {
+        categoryId: category,
+      },
+      include: {
+        category: true,
+      },
+    });
     revalidatePath("/dashboard");
     return {
       status: 200,
@@ -94,25 +125,21 @@ export async function getProjects() {
   }
 }
 
-export async function getProjectsByCategory(category: string) {
+export async function getCategories (){
   try {
-    const projects = await prisma.portFolioProject.findMany({
-      where: {
-        category,
-      },
-    });
+    const categories = await prisma.category.findMany();
     revalidatePath("/dashboard");
     return {
       status: 200,
-      data: projects,
-      message: "Projects fetched successfully",
-    };
-  } catch (e) {
-    console.log(e);
-    return {
-      status: 500,
-      data: null,
-      message: "Failed to fetch projects",
-    };
+      data: categories,
+      message: "Categories fetched successfully",
+    }
+}catch(err){
+  console.log(err)
+  return {
+    status: 500,
+    data: null,
+    message: "Failed to fetch categories",
+  };
   }
 }

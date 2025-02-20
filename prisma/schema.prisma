@@ -8,10 +8,11 @@ datasource db {
 }
 
 model PortFolioProject {
-  id       Int    @id @default(autoincrement())
-  title    String
-  category String
-  url      String
+  id         Int       @id @default(autoincrement())
+  title      String
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  url        String
 }
 
 model User {
@@ -19,4 +20,10 @@ model User {
   email    String  @unique
   name     String?
   password String
+}
+
+model Category {
+  id               Int                @id @default(autoincrement())
+  name             String
+  PortFolioProject PortFolioProject[]
 }

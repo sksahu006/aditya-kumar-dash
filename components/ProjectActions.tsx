@@ -1,9 +1,9 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteProject, updateProject } from "@/app/actions/projectActions";
+import { deleteProject, getCategories, updateProject } from "@/app/actions/projectActions";
 import { Upload, Loader2, X, Pencil, Trash2, Link2, ImageIcon, LayoutTemplate } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
@@ -12,22 +12,32 @@ export default function ProjectActions({ project }: {
   project: {
     id: number;
     title: string;
-    category: string;
+    category?: { name: string; id: number; } | null;
+    categoryId: number | null;
     url: string;
     imageUrl?: string;
   }
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [categories, setCategories] = useState<{ id: number; name: string; }[] | null>([]);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
     title: project.title,
-    category: project.category,
+    categoryId: project.categoryId,
     url: project.url,
     imageFile: null as File | null,
     imageUrl: project.imageUrl || "",
   });
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getCategories();
+      setCategories(data?.data);
+    };
+    fetchCategories();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -52,7 +62,6 @@ export default function ProjectActions({ project }: {
     startTransition(async () => {
       try {
         let imageUrl = formData.url;
-        console.log(imageUrl)
         if (formData.imageFile) {
           const cloudinaryUrl = await uploadImageToCloudinary(formData.imageFile);
           imageUrl = cloudinaryUrl;
@@ -60,9 +69,8 @@ export default function ProjectActions({ project }: {
 
         await updateProject(project.id, {
           title: formData.title,
-          category: formData.category,
+          categoryId: formData.categoryId,
           url: imageUrl,
-          // imageUrl
         });
 
         setIsEditing(false);
@@ -72,7 +80,6 @@ export default function ProjectActions({ project }: {
       }
     });
   };
-  const categories = ["AI", "Movie Poster", "Promotioanl Post", "Logo", "social Media", "Minimilistic design", "Illustration", "Packaging Design,Ak's Designs,Other"]; // Your categories
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
@@ -115,12 +122,20 @@ export default function ProjectActions({ project }: {
                     <LayoutTemplate className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <select
                       className="border rounded-md p-2 pl-10 text-black w-full"
-                      value={formData.category}
-                      onChange={(e) => setFormData((p) => ({ ...p, category: e.target.value }))}
+                      value={formData.categoryId?.toString() ?? ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFormData((prev) => ({
+                          ...prev,
+                          categoryId: value === "" ? null : Number(value),
+                        }));
+                      }}
                     >
                       <option value="" disabled>Select a category</option>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>{category}</option>
+                      {categories?.map((category) => (
+                        <option key={category.id} value={category.id.toString()}>
+                          {category.name}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -193,7 +208,7 @@ export default function ProjectActions({ project }: {
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-lg">{formData.title || "Project Title"}</h3>
-                <p className="text-sm text-gray-500">{formData.category || "Category"}</p>
+                <p className="text-sm text-gray-500">{formData.categoryId}</p>
                 <div className="mt-3 flex items-center gap-2 text-sm text-purple-600">
                   <Link2 className="w-4 h-4" />
                   <span>{formData.url || "your-project-url.com"}</span>
@@ -238,7 +253,7 @@ export default function ProjectActions({ project }: {
 
             <div className="space-y-4">
               <DetailItem label="Title" value={project.title} />
-              <DetailItem label="Category" value={project.category} />
+              <DetailItem label="Category" value={project?.category ? project?.category?.name : ""} />
               <DetailItem label="URL" value={project.url} />
             </div>
           </div>
@@ -284,7 +299,7 @@ const InputField = ({ icon, label, ...props }: any) => (
   </div>
 );
 
-const DetailItem = ({ label, value }: { label: string; value: string }) => (
+const DetailItem = ({ label, value }: { label: string; value: string | number | null }) => (
   <div className="border-b pb-3 last:border-0">
     <p className="text-sm text-gray-500">{label}</p>
     <p className="font-medium">{value}</p>

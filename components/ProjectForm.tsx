@@ -1,27 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createProject } from "@/app/actions/projectActions";
+import { createProject, getCategories } from "@/app/actions/projectActions";
 import { useToast } from "@/hooks/use-toast";
 
 export default function ProjectForm() {
   const [formData, setFormData] = useState({
     title: "",
-    category: "",
+    categoryId: 1,
     url: "",
     imageFile: null as File | null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<{ id:number, name: string }[] | null>(null);
   const { toast } = useToast();
 
-  const categories = ["AI","Movie Poster","Promotioanl Post","Logo","social Media","Minimilistic design","Illustration","Packaging Design","Ak's Designs","Others"]; // Your categories
+    useEffect(() => {
+      const fetchCategories = async () => {
+        const data = await getCategories();
+        setCategories(data?.data);
+      };
+      fetchCategories();
+    }, []);
+  
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!formData.title || !formData.category) {
+    if (!formData.title || !formData.categoryId) {
       toast({ title: "Error", description: "Please fill in all fields", variant: "destructive" });
       return;
     }
@@ -35,12 +43,12 @@ export default function ProjectForm() {
 
       await createProject({
         title: formData.title,
-        category: formData.category,
+        categoryId: formData.categoryId,
         url: cloudinaryImageUrl,
       });
 
       toast({ title: "Success", description: "Project created successfully" });
-      setFormData({ title: "", category: "", url: "", imageFile: null });
+      setFormData({ title: "", categoryId: 1, url: "", imageFile: null });
     } catch (error) {
       toast({ title: "Error", description: "Failed to create project", variant: "destructive" });
       console.error("Error creating project:", error);
@@ -73,13 +81,13 @@ export default function ProjectForm() {
         <select
           id="category"
           className="text-black w-full p-2 border rounded-md"
-          value={formData.category}
-          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+          value={formData.categoryId}
+          onChange={(e) => setFormData({ ...formData, categoryId: parseInt(e.target.value) })}
         >
-          <option value="">Select Category</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+          <option disabled value="">Select Category</option>
+          {categories?.map((category) => (
+            <option key={category?.id} value={category?.id}>
+              {category?.name}
             </option>
           ))}
         </select>
