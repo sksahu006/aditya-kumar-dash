@@ -75,18 +75,33 @@ export async function deleteProject(id: number) {
   }
 }
 
-export async function getProjects() {
+export async function getProjects(categoryId: number | null, limit = 10, page = 1) {
   try {
+    const skip = (page - 1) * limit;
     const projects = await prisma.portFolioProject.findMany({
+      skip,
+      take: limit,
+      where: {
+        categoryId: categoryId || undefined,
+      },
       include: {
         category: true,
       },
+      orderBy: {
+        id: 'asc',
+      },
     });
 
-    revalidatePath("/dashboard");
+    const totalCount = await prisma.portFolioProject.count({
+      where: {
+        categoryId: categoryId || undefined,
+      },
+    });
+
     return {
       status: 200,
       data: projects as ProjectWithCategory[],
+      totalCount,
       message: "Projects fetched successfully",
     };
   } catch (e) {
