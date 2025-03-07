@@ -14,6 +14,8 @@ import { FloatingDock } from "@/components/ui/floating-dock";
 import { HeroParallaxDemo } from "@/components/Project";
 import Navbar from "@/components/Navbar";
 import NotFoundPage from "@/components/notFountPage";
+import Category from '@/components/Category'
+import Experience from "@/components/Experience";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -64,7 +66,7 @@ export default function HomePage() {
     // <NotFoundPage/>
     // </>
     <main ref={mainRef} className="bg-[#020817] min-h-screen text-white">
-        <Navbar />
+      <Navbar />
       {/* Hero Section */}
       <section
         id="home"
@@ -183,7 +185,22 @@ export default function HomePage() {
 
       <section id="projects" className="min-h-screen py-20">
         <HeroParallaxDemo />
+        <Category />
       </section>
+
+      <section
+        id="experience"
+        className="min-h-screen flex items-center md:py-20 px-6 md:px-10 lg:px-24"
+      >
+        <Experience />
+      </section>
+
+      {/* Category Section */}
+      {/* <section
+        id="category"
+        className="min-h-screen flex items-center md:py-20 px-6 md:px-10 lg:px-24"
+      >
+      </section> */}
 
       {/* Contact Section */}
       <section

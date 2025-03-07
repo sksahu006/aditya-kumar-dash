@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import { deleteProject, getCategories, updateProject } from "@/app/actions/proje
 import { Upload, Loader2, X, Pencil, Trash2, Link2, ImageIcon, LayoutTemplate } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function ProjectActions({ project }: {
   project: {
@@ -80,36 +82,50 @@ export default function ProjectActions({ project }: {
       }
     });
   };
+
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <motion.h1
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="text-2xl font-bold text-gradient bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600"
+        >
           {isEditing ? "Edit Project" : project.title}
-        </h1>
+        </motion.h1>
         <Button
           onClick={() => setIsEditing(!isEditing)}
           variant="ghost"
-          className="rounded-full p-3 hover:bg-gray-100 dark:hover:bg-gray-800"
+          size="sm"
+          className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
         >
           {isEditing ? (
-            <X className="w-5 h-5 text-red-600" />
+            <X className="w-4 h-4 text-red-600" />
           ) : (
-            <Pencil className="w-5 h-5 text-gray-600" />
+            <Pencil className="w-4 h-4 text-gray-600" />
           )}
         </Button>
       </div>
 
       {isEditing ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
           {/* Edit Form */}
-          <div className="space-y-6">
-            <div className="bg-glass p-6 rounded-xl shadow-inset">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <LayoutTemplate className="w-5 h-5 text-purple-600" />
-                Project Details
-              </h2>
-
-              <div className="space-y-4">
+          <div className="space-y-4">
+            <Card className="p-4 hover:shadow-md transition-shadow">
+              <CardHeader className="p-0 mb-4">
+                <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                  <LayoutTemplate className="w-4 h-4 text-purple-600" />
+                  Project Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 space-y-3">
                 <InputField
                   icon={<Pencil className="w-4 h-4" />}
                   label="Title"
@@ -121,7 +137,7 @@ export default function ProjectActions({ project }: {
                   <div className="relative">
                     <LayoutTemplate className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
                     <select
-                      className="border rounded-md p-2 pl-10 text-black w-full"
+                      className="border rounded-md p-2 pl-10 text-sm w-full hover:border-purple-500 transition-colors"
                       value={formData.categoryId?.toString() ?? ""}
                       onChange={(e) => {
                         const value = e.target.value;
@@ -140,7 +156,6 @@ export default function ProjectActions({ project }: {
                     </select>
                   </div>
                 </div>
-
                 <InputField
                   icon={<Link2 className="w-4 h-4" />}
                   label="Project URL"
@@ -148,99 +163,112 @@ export default function ProjectActions({ project }: {
                   value={formData.url}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData(p => ({ ...p, url: e.target.value }))}
                 />
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
-            <div className="bg-glass p-6 rounded-xl shadow-inset">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <ImageIcon className="w-5 h-5 text-purple-600" />
-                Media Upload
-              </h2>
+            <Card className="p-4 hover:shadow-md transition-shadow">
+              <CardHeader className="p-0 mb-4">
+                <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-purple-600" />
+                  Media Upload
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <label className="group relative aspect-video flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-purple-500 transition-colors">
+                  {formData.imageUrl ? (
+                    <>
+                      <Image
+                        src={formData.imageUrl}
+                        alt="Preview"
+                        fill
+                        className="object-cover rounded-lg group-hover:opacity-80 transition-opacity"
+                      />
+                      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Upload className="w-6 h-6 text-white mb-2" />
+                        <span className="text-white text-sm">Click to replace image</span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-6 h-6 text-gray-400 mb-2 group-hover:text-purple-500" />
+                      <span className="text-gray-500 group-hover:text-purple-500">Drag & drop or click to upload</span>
+                      <span className="text-xs text-gray-400 mt-1">PNG, JPG (max 5MB)</span>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </label>
+              </CardContent>
+            </Card>
+          </div>
 
-              <label className="group relative aspect-video flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-purple-500 transition-colors">
-                {formData.imageUrl ? (
-                  <>
+          {/* Preview Panel */}
+          <Card className="p-4 h-fit sticky top-4 hover:shadow-md transition-shadow">
+            <CardHeader className="p-0 mb-4">
+              <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-purple-600" />
+                Live Preview
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="border rounded-lg overflow-hidden">
+                <div className="relative aspect-video bg-gray-100">
+                  {formData.imageUrl && (
                     <Image
                       src={formData.imageUrl}
                       alt="Preview"
                       fill
-                      className="object-cover rounded-xl group-hover:opacity-80 transition-opacity"
+                      className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Upload className="w-8 h-8 text-white mb-2" />
-                      <span className="text-white text-sm">Click to replace image</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-8 h-8 text-gray-400 mb-2 group-hover:text-purple-500" />
-                    <span className="text-gray-500 group-hover:text-purple-500">Drag & drop or click to upload</span>
-                    <span className="text-sm text-gray-400 mt-1">PNG, JPG (max 5MB)</span>
-                  </>
-                )}
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
-            </div>
-          </div>
-
-          {/* Preview Panel */}
-          <div className="bg-glass p-6 rounded-xl h-fit sticky top-6 shadow-inset">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <ImageIcon className="w-5 h-5 text-purple-600" />
-              Live Preview
-            </h2>
-
-            <div className="border rounded-xl overflow-hidden">
-              <div className="relative aspect-video bg-gray-100">
-                {formData.imageUrl && (
-                  <Image
-                    src={formData.imageUrl}
-                    alt="Preview"
-                    fill
-                    className="object-cover"
-                  />
-                )}
-              </div>
-              <div className="p-4">
-                <h3 className="font-semibold text-lg">{formData.title || "Project Title"}</h3>
-                <p className="text-sm text-gray-500">{formData.categoryId}</p>
-                <div className="mt-3 flex items-center gap-2 text-sm text-purple-600">
-                  <Link2 className="w-4 h-4" />
-                  <span>{formData.url || "your-project-url.com"}</span>
+                  )}
+                </div>
+                <div className="p-3">
+                  <h3 className="font-semibold text-md">{formData.title || "Project Title"}</h3>
+                  <p className="text-sm text-gray-500">{formData.categoryId}</p>
+                  <div className="mt-2 flex items-center gap-2 text-sm text-purple-600">
+                    <Link2 className="w-4 h-4" />
+                    <span>{formData.url || "your-project-url.com"}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-6 flex gap-3 justify-end">
-              <Button
-                variant="outline"
-                onClick={() => setIsEditing(false)}
-                disabled={isPending}
-                className="text-black"
-              >
-                Discard
-              </Button>
-              <Button
-                onClick={handleUpdate}
-                disabled={isPending}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
-              >
-                {isPending ? <Loader2 className="animate-spin mr-2" /> : null}
-                {isPending ? "Saving..." : "Publish Changes"}
-              </Button>
-            </div>
-          </div>
-        </div>
+              <div className="mt-4 flex gap-2 justify-end">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsEditing(false)}
+                  disabled={isPending}
+                  size="sm"
+                  className="text-black hover:bg-gray-100"
+                >
+                  Discard
+                </Button>
+                <Button
+                  onClick={handleUpdate}
+                  disabled={isPending}
+                  size="sm"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
+                >
+                  {isPending ? <Loader2 className="animate-spin mr-2" /> : null}
+                  {isPending ? "Saving..." : "Publish Changes"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       ) : (
         /* View Mode */
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-glass p-6 rounded-xl shadow-inset">
-            <div className="relative aspect-video rounded-xl overflow-hidden mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+        >
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="relative aspect-video rounded-lg overflow-hidden mb-4">
               {project.imageUrl && (
                 <Image
                   src={project.imageUrl}
@@ -251,19 +279,22 @@ export default function ProjectActions({ project }: {
               )}
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               <DetailItem label="Title" value={project.title} />
               <DetailItem label="Category" value={project?.category ? project?.category?.name : ""} />
               <DetailItem label="URL" value={project.url} />
             </div>
-          </div>
+          </Card>
 
-          <div className="bg-glass p-6 rounded-xl shadow-inset h-fit sticky top-6">
-            <h2 className="text-lg font-semibold mb-6">Project Actions</h2>
-            <div className="space-y-4">
+          <Card className="p-4 h-fit sticky top-4 hover:shadow-md transition-shadow">
+            <CardHeader className="p-0 mb-4">
+              <CardTitle className="text-lg font-semibold">Project Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0 space-y-2">
               <Button
                 onClick={() => setIsEditing(true)}
                 variant="outline"
+                size="sm"
                 className="w-full justify-start gap-2 text-black hover:bg-purple-50"
               >
                 <Pencil className="w-4 h-4" />
@@ -272,15 +303,16 @@ export default function ProjectActions({ project }: {
               <Button
                 onClick={handleDelete}
                 variant="outline"
+                size="sm"
                 className="w-full justify-start gap-2 text-red-600 hover:bg-red-50"
                 disabled={isPending}
               >
                 <Trash2 className="w-4 h-4" />
                 {isPending ? "Deleting..." : "Delete Project"}
               </Button>
-            </div>
-          </div>
-        </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
     </div>
   );
@@ -294,15 +326,15 @@ const InputField = ({ icon, label, ...props }: any) => (
     </label>
     <Input
       {...props}
-      className="bg-white/50 border-gray-200 focus:border-purple-500 focus:ring-purple-500"
+      className="bg-white/50 border-gray-200 focus:border-purple-500 focus:ring-purple-500 text-sm"
     />
   </div>
 );
 
 const DetailItem = ({ label, value }: { label: string; value: string | number | null }) => (
-  <div className="border-b pb-3 last:border-0">
+  <div className="border-b pb-2 last:border-0">
     <p className="text-sm text-gray-500">{label}</p>
-    <p className="font-medium">{value}</p>
+    <p className="font-medium text-sm">{value}</p>
   </div>
 );
 
