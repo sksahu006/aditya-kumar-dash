@@ -63,52 +63,102 @@ const Navbar = () => {
     { href: "#contact", label: "Contact" },
   ];
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <nav className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-auto overflow-x-auto sm:overflow-visible">
-      <div
-        ref={navRef}
-        className="relative bg-black/20 backdrop-blur-md px-4 md:px-8 py-2 md:py-3 rounded-full overflow-hidden whitespace-nowrap scrollbar-hide"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className="flex items-center justify-between sm:justify-center gap-4 md:gap-8 relative z-10 w-max sm:w-auto mx-auto px-2 sm:px-0">
-          {navLinks.map(({ href, label }) => {
-            const isActive = activeSection === href.substring(1);
-            return (
-              <a
-                key={href}
-                href={href}
-                onClick={handleNavClick}
-                className={`
-                  relative text-sm sm:text-base md:text-lg transition-all duration-300
-                  ${isActive
-                    ? 'text-white bg-gradient-to-r from-black/80 via-black/10 to-white/40 border border-white/50 px-3 md:px-6 py-1.5 md:py-2 rounded-full'
-                    : 'text-white/70 hover:text-white'
-                  }
-                `}
-              >
-                {label}
-              </a>
-            );
-          })}
+    <>
+      {/* Desktop Navbar */}
+      <nav className="fixed hidden md:block top-6 left-1/2 -translate-x-1/2 z-50">
+        <div
+          ref={navRef}
+          className="relative bg-black/20 backdrop-blur-md px-8 py-3 rounded-full overflow-hidden"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="flex items-center gap-8 relative z-10">
+            {navLinks.map(({ href, label }) => {
+              const isActive = activeSection === href.substring(1);
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={handleNavClick}
+                  className={`
+                    relative text-lg transition-all duration-300
+                    ${isActive
+                      ? 'text-white bg-gradient-to-r from-black/80 via-black/10 to-white/40 border border-white/50 px-6 py-2 rounded-full'
+                      : 'text-white/70 hover:text-white'
+                    }
+                  `}
+                >
+                  {label}
+                </a>
+              );
+            })}
+          </div>
+          {isHovered && (
+            <div
+              className="absolute pointer-events-none transition-opacity duration-300"
+              style={{
+                left: `${mousePosition.x}px`,
+                top: `${mousePosition.y}px`,
+                transform: 'translate(-50%, -50%)',
+                width: '120px',
+                height: '120px',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
+                opacity: isHovered ? 1 : 0,
+              }}
+            />
+          )}
         </div>
-        {isHovered && (
-          <div
-            className="absolute pointer-events-none transition-opacity duration-300"
-            style={{
-              left: `${mousePosition.x}px`,
-              top: `${mousePosition.y}px`,
-              transform: 'translate(-50%, -50%)',
-              width: '120px',
-              height: '120px',
-              background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
-              opacity: isHovered ? 1 : 0,
-            }}
-          />
+      </nav>
+
+      {/* Mobile Navbar */}
+      <nav className="fixed md:hidden top-4 right-4 z-50">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white"
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-12 right-0 w-48 bg-black/90 backdrop-blur-md border border-white/10 rounded-2xl py-2 shadow-xl flex flex-col overflow-hidden">
+            {navLinks.map(({ href, label }) => {
+              const isActive = activeSection === href.substring(1);
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={(e) => {
+                    handleNavClick(e);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`
+                    px-6 py-3 text-sm transition-all duration-300 border-l-2
+                    ${isActive
+                      ? 'text-white border-blue-500 bg-white/5'
+                      : 'text-white/70 border-transparent hover:text-white hover:bg-white/5'
+                    }
+                  `}
+                >
+                  {label}
+                </a>
+              );
+            })}
+          </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
