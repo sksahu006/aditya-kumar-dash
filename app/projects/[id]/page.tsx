@@ -4,13 +4,19 @@ import { prisma } from "@/lib/prisma";
 
 // Generate static params to pre-render pages for all categories
 export async function generateStaticParams() {
-    const categories = await prisma.category.findMany({
-        select: { id: true }, // Only fetch category IDs
-    });
+    try {
+        const categories = await prisma.category.findMany({
+            select: { id: true }, // Only fetch category IDs
+        });
 
-    return categories.map((category: any) => ({
-        id: category.id.toString(), // Convert to string as params expects strings
-    }));
+        return categories.map((category: any) => ({
+            id: category.id.toString(), // Convert to string as params expects strings
+        }));
+    } catch (e) {
+        // Return empty array if DB fails during build so build doesn't crash completely
+        // if DATABASE_URL is unavailable at build time.
+        return [];
+    }
 }
 
 // Server Component with SSG

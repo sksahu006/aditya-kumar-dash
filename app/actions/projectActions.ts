@@ -124,7 +124,6 @@ export async function getProjectsByCategory(category: number) {
         category: true,
       },
     });
-    revalidatePath("/dashboard");
     return {
       status: 200,
       data: projects,
