@@ -80,7 +80,7 @@ export default function HomePage() {
       {/* About Section */}
       <section
         id="about"
-        className="min-h-screen flex items-center md:py-20 px-6 md:px-10 lg:px-24"
+        className="min-h-screen flex items-center py-10 md:py-20 px-0 sm:px-6 md:px-10 lg:px-24 w-full overflow-hidden"
       >
         <About />
       </section>
@@ -107,7 +107,7 @@ export default function HomePage() {
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12  bg-gradient-to-r from-[#cedeee] to-[#779fca] text-transparent bg-clip-text">
                 SKILLS
               </h2>
-              <div className="">
+              <div className="flex justify-center w-full">
                 <FloatingDock
                   items={[
                     {
@@ -183,14 +183,14 @@ export default function HomePage() {
         </LampContainer>
       </section>
 
-      <section id="projects" className="min-h-screen py-20">
+      <section id="projects" className="min-h-screen py-10 md:py-20 w-full overflow-hidden">
         <HeroParallaxDemo />
         <Category />
       </section>
 
       <section
         id="experience"
-        className="min-h-screen flex items-center md:py-20 px-6 md:px-10 lg:px-24"
+        className="min-h-screen flex items-center py-10 md:py-20 px-0 sm:px-6 md:px-10 lg:px-24 w-full overflow-hidden"
       >
         <Experience />
       </section>
@@ -205,9 +205,9 @@ export default function HomePage() {
       {/* Contact Section */}
       <section
         id="contact"
-        className="min-h-screen flex items-center py-20 bg-[#0a1122]"
+        className="min-h-screen flex items-center py-10 md:py-20 bg-[#0a1122] w-full overflow-hidden"
       >
-        <div className="container mx-auto px-4 max-w-2xl">
+        <div className="container mx-auto px-4 sm:px-6 max-w-2xl">
           <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
           <form className="space-y-6">
             <div>

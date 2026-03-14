@@ -23,7 +23,7 @@ export const FloatingDock = ({
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
-      {/* <FloatingDockMobile items={items} className={mobileClassName} /> */}
+      <FloatingDockMobile items={items} className={mobileClassName} />
     </>
   );
 };
@@ -96,7 +96,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto w-[425px] sm:w-[500px] flex h-20 gap-4 items-end justify-around  rounded-2xl bg-black/70  dark:bg-neutral-900 px-4 pb-3",
+        "mx-auto hidden md:flex w-[425px] sm:w-[500px] h-20 gap-4 items-end justify-around  rounded-2xl bg-black/70  dark:bg-neutral-900 px-4 pb-3",
         className
       )}
     >

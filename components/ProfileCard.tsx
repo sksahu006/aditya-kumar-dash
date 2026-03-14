@@ -36,25 +36,25 @@ export default function ProfileCard() {
           impactful, and meaningful visual designs.
         </p>
       </div> */}
-      <CardContainer className="relative">
+      <CardContainer className="relative w-[90%] max-w-md md:max-w-xl mx-auto">
         <div className="absolute -inset-0.5 bg-gradient-to-b from-[#00a2f2] via-slate-500 to-[#00496d] rounded-3xl opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-        <CardBody className="bg-black/50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-3xl border">
+        <CardBody className="bg-black/50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full sm:w-[30rem] h-auto rounded-3xl border">
           <div className="bg-black/90 p-4 rounded-3xl">
             <CardItem translateZ="100" className="w-full">
               <Image
                 src="aditya.jpg"
                 height="1000"
                 width="1000"
-                className="h-96 w-full object-cover rounded-3xl group-hover/card:shadow-xl"
+                className="h-64 sm:h-96 w-full object-cover rounded-3xl group-hover/card:shadow-xl"
                 alt="thumbnail"
               />
             </CardItem>
             <div className="flex items-center mt-4 justify-center">
               <CardItem
                 translateZ={40}
-                className="px-4 py-2 rounded-3xl text-xs font-normal dark:text-white"
+                className="px-2 sm:px-4 py-2 rounded-3xl text-xs font-normal dark:text-white"
               >
-                <h1 className="text-2xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-purple-400 to-blue-400 text-transparent bg-clip-text text-center">
                   <span className="text-white font-medium from-neutral-400">
                     Hey,
                   </span>{" "}
@@ -66,7 +66,7 @@ export default function ProfileCard() {
         </CardBody>
       </CardContainer>
 
-      <p className="text-2xl font-semibold text-white/70 tracking-wider leading-8 max-w-2xl mx-auto mt-4">
+      <p className="text-base sm:text-xl md:text-2xl font-semibold text-white/70 tracking-wide sm:tracking-wider leading-6 sm:leading-8 max-w-2xl mx-auto mt-4 sm:mt-8 text-center px-4">
         A passionate graphic designer focused on crafting minimalist, impactful,
         and meaningful visual designs.
       </p>

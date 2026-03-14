@@ -64,15 +64,15 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+    <nav className="fixed top-2 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-auto overflow-x-auto sm:overflow-visible">
       <div
         ref={navRef}
-        className="relative bg-black/20 backdrop-blur-md px-4 md:px-8 py-3 rounded-full overflow-hidden"
+        className="relative bg-black/20 backdrop-blur-md px-4 md:px-8 py-2 md:py-3 rounded-full overflow-hidden whitespace-nowrap scrollbar-hide"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="flex items-center gap-4 md:gap-8 relative z-10">
+        <div className="flex items-center justify-between sm:justify-center gap-4 md:gap-8 relative z-10 w-max sm:w-auto mx-auto px-2 sm:px-0">
           {navLinks.map(({ href, label }) => {
             const isActive = activeSection === href.substring(1);
             return (
@@ -81,9 +81,9 @@ const Navbar = () => {
                 href={href}
                 onClick={handleNavClick}
                 className={`
-                  relative text-base md:text-lg transition-all duration-300
+                  relative text-sm sm:text-base md:text-lg transition-all duration-300
                   ${isActive
-                    ? 'text-white bg-gradient-to-r from-black/80 via-black/10 to-white/40 border border-white/50 px-3 md:px-6 py-2 rounded-full'
+                    ? 'text-white bg-gradient-to-r from-black/80 via-black/10 to-white/40 border border-white/50 px-3 md:px-6 py-1.5 md:py-2 rounded-full'
                     : 'text-white/70 hover:text-white'
                   }
                 `}
