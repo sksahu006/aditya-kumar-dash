@@ -7,7 +7,7 @@ const LifeSection = () => {
   return (
     <div className="container mx-auto px-4 sm:px-8 py-8 sm:py-16 bg-[#020817]">
       <div className="flex flex-col md:grid md:grid-cols-2 gap-16 md:gap-8">
-        <div className="relative">
+        <div className="relative h-full">
           <div className="absolute -top-12 sm:-top-8 md:top-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-12 w-24 sm:w-28 md:w-40 h-24 sm:h-28 md:h-40 z-10">
             <Image
               src="boy1.png"
@@ -17,7 +17,7 @@ const LifeSection = () => {
               className="object-contain"
             />
           </div>
-          <CardSpotlight className="mt-8 sm:mt-16 pt-16 sm:pt-20 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
+          <CardSpotlight className="h-full mt-8 sm:mt-16 pt-16 sm:pt-20 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
             <h2 className="mb-6 sm:mb-8 text-center whitespace-nowrap">
               <span className="text-3xl sm:text-4xl font-bold text-white my-1 block sm:inline">
                 Designing
@@ -43,7 +43,7 @@ const LifeSection = () => {
           </CardSpotlight>
         </div>
 
-        <div className="relative">
+        <div className="relative h-full">
           <div className="absolute -top-12 sm:-top-8 md:top-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-12 w-24 sm:w-28 md:w-40 h-24 sm:h-28 md:h-40 z-10">
             <Image
               src="boy2.png"
@@ -54,7 +54,7 @@ const LifeSection = () => {
             />
           </div>
 
-          <CardSpotlight className="mt-8 sm:mt-16 pt-16 sm:pt-20 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
+          <CardSpotlight className="h-full mt-8 sm:mt-16 pt-16 sm:pt-20 rounded-3xl bg-gradient-to-br from-[#4d5561] to-[#000d21] backdrop-blur-sm">
               <h2 className="mb-6 sm:mb-8 text-center">
                 <span className="text-3xl sm:text-4xl font-bold text-white my-1 block sm:inline">
                   Study
