@@ -27,13 +27,15 @@ const LifeSection = () => {
               </span>
             </h2>
             <div className="space-y-4 sm:space-y-6">
-              {[1, 2, 3].map((item) => (
-                <div key={item} className="relative pl-4 sm:pl-6">
+              {[
+                "I started design without knowing much about how it actually works.",
+                "Then I joined ZICA, Bhubaneswar, where I learned the basics and understood design better.",
+                "From there, I started developing my own style, improving with every project and experience."
+              ].map((item, index) => (
+                <div key={index} className="relative pl-4 sm:pl-6">
                   <div className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-blue-500 via-blue-500 to-black/50" />
                   <p className="hover:text-slate-400 font-semibold text-white text-sm sm:text-base">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy
+                    {item}
                   </p>
                 </div>
               ))}
@@ -62,13 +64,15 @@ const LifeSection = () => {
                 </span>
               </h2>
               <div className="space-y-4 sm:space-y-6">
-                {[1, 2, 3].map((item) => (
-                  <div key={item} className="relative pl-4 sm:pl-6">
+                {[
+                  "My student life has been a mix of learning, struggles, and small achievements. Like most people, I followed the usual path of school and studies.",
+                  "Over time, I started understanding what I enjoy and where I want to focus. It wasn’t always clear, but I kept learning and improving step by step.",
+                  "Now, I’m more focused on building my skills and growing in the right direction. I’m still learning, but with better clarity and purpose."
+                ].map((item, index) => (
+                  <div key={index} className="relative pl-4 sm:pl-6">
                     <div className="absolute left-0 top-0 w-0.5 h-full bg-gradient-to-b from-blue-500 via-blue-500 to-black/50" />
                     <p className="hover:text-slate-400 font-semibold text-white text-sm sm:text-base">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy
+                      {item}
                     </p>
                   </div>
                 ))}
